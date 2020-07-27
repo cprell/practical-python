@@ -20,11 +20,11 @@ while principal > 0 and principal > payment:
         principal = principal - extra_payment
         total_paid = total_paid + extra_payment
 
-    print(months, round(total_paid, 2), round(principal, 2))
+    print(f'{months}    {round(total_paid, 2)}    {round(principal, 2)}')
 
     if principal < payment:
         months = months + 1
         payment = principal * (1+rate/12)
         principal = principal * (1+rate/12) - payment
         total_paid = total_paid + payment
-        print(months, round(total_paid, 2), round(principal, 2))
+        print(f'{months}    {round(total_paid, 2)}    {round(principal, 2)}')
