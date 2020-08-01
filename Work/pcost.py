@@ -7,9 +7,14 @@ def portfolio_cost(filename):
     next(f)
     for line in f:
         row = line.split(',')
-        total_cost = total_cost + int(row[1]) * float(row[2])
+        try:
+            shares = int(row[1])
+            price = float(row[2])
+        except ValueError:
+            print("Couldn't parse", line)
+        total_cost = total_cost + shares * price
     return total_cost
 
 
-cost = portfolio_cost('Data/portfolio.csv')
+cost = portfolio_cost('Data/missing.csv')
 print('Total cost', cost)
