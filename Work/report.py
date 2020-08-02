@@ -11,12 +11,13 @@ def read_portfolio(filename):
 
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
-        headers = next(rows)
+        header = next(rows)
         for row in rows:
+            record = dict(zip(header, row))
             stock = {
-                'name': row[0],
-                'shares': int(row[1]),
-                'price': float(row[2])
+                'name': record['name'],
+                'shares': int(record['shares']),
+                'price': float(record['price'])
             }
             output_portfolio.append(stock)
 
@@ -58,11 +59,11 @@ print('Total gain', round(total_portfolio_sum - current_prices_sum, 2))
 
 def make_report():
     report = []
-    portfolio = read_portfolio('Data/portfolio.csv')
-    prices = read_prices('Data/prices.csv')
-    for s in portfolio:
-        change = prices[s['name']] - s['price']
-        report.append((s['name'], s['shares'], prices[s['name']], change))
+    report_portfolio = read_portfolio('Data/portfoliodate.csv')
+    report_price = read_prices('Data/prices.csv')
+    for s in report_portfolio:
+        change = report_price[s['name']] - s['price']
+        report.append((s['name'], s['shares'], report_price[s['name']], change))
 
     print_report(report)
 
@@ -73,7 +74,7 @@ def print_report(report):
     for name, shares, price, change in report:
         price_with_currency = currency + str(price)
         print(f'{name:>10s} {shares:>10d} {price_with_currency:>10} {change:>10.2f}')
- 
+
 
 def print_header():
     headers = ('Name', 'Shares', 'Price', 'Change')
